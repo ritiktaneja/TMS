@@ -40,10 +40,13 @@ def get_hod_data(request):
             'thesis_subject', 'name_of_org', 'expected_deliverables',
             'is_hod_approved',
         )
+       
         pending_applications_list = list(pending_applications_qs)
         pending_applications_list = clean_list(pending_applications_list)
-        approved_applications_list = clean_list(approved_applications_list)
+        
+       
         # approved applications
+       
         approved_applications_qs = PS2TSTransfer.objects.filter(
             hod_email = current_user.email,
             is_supervisor_approved__gt = ApplicationsStatus.PENDING.value,
@@ -52,9 +55,12 @@ def get_hod_data(request):
             'applicant__user__username',
             'applicant__user__first_name', 'applicant__user__last_name',
             'cgpa', 'thesis_locale', 'supervisor_email',
-            'thesis_subject', 'name_of_org', 'expected_deliverables'
+            'thesis_subject', 'name_of_org', 'expected_deliverables',
+            'is_hod_approved',
         )
+        
         approved_applications_list = list(approved_applications_qs)
+        approved_applications_list = clean_list(approved_applications_list)
         response['error'] = False
         response['message'] = 'success'
         response['data'] = {}
